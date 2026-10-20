@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>이진수 마법 카드</title>
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* 세로 중앙 정렬 */
+      align-items: center;    /* 가로 중앙 정렬 */
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      box-sizing: border-box;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    header h1 {
+      font-size: 24px;
+      margin: 0;
+    }
+    header p {
+      font-size: 14px;
+      color: #555;
+      margin: 5px 0 0;
+    }
+    .controls {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .controls button {
+      background-color: #ffc107;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .cards {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .card-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* 세로 중앙 정렬 */
+      align-items: center;
+      background-color: #dce8f3;
+      border: 2px solid #0288d1;
+      border-radius: 8px;
+      padding: 10px;
+      width: 120px;
+      height: 200px; /* 고정 높이로 portrait 형태 */
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .card:hover {
+      transform: translateY(-4px);
+    }
+    .card-wrapper.selected .card {
+      border-color: #0762b1;
+      transform: scale(1.05);
+    }
+    .numbers {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-gap: 10px;
+      text-align: center;
+      font-weight: bold;
+    }
+    .numbers span {
+      font-size: 22px;
+      line-height: 1.8;
+      color: #0762b1;
+    }
+    .checkbox-wrapper {
+      margin-top: 10px;
+    }
+    .checkbox-wrapper input[type="checkbox"] {
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+    .bottom-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+      gap: 10px;
+      text-align: center;
+    }
+    .bottom-controls .instructions {
+      font-size: 16px;
+      color: #333;
+    }
+    .bottom-controls button#confirm {
+      background-color: #ffc107;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .bottom-controls .output {
+      font-size: 20px;
+      font-weight: bold;
+      color: #d32f2f;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>1~31 사이의 숫자 하나를 생각한 후 해당 숫자가 있는 카드를 모두 선택해주세요.</h1>
+    <p>(선택된 카드 아래에 체크 표시가 나타납니다. 잘못 선택했다면 해당 숫자 카드를 다시 선택하면 체크 표시가 사라집니다.)</p>
+  </header>
+
+  <div class="controls">
+    <button id="reset">초기화</button>
+  </div>
+
+  <div class="container">
+    <div class="cards">
+      <!-- 카드 16 -->
+      <div class="card-wrapper" data-value="16">
+        <div class="card">
+          <div class="numbers">
+            <span>16</span><span>17</span><span>18</span><span>19</span>
+            <span>20</span><span>21</span><span>22</span><span>23</span>
+            <span>24</span><span>25</span><span>26</span><span>27</span>
+            <span>28</span><span>29</span><span>30</span><span>31</span>
+          </div>
+        </div>
+        <div class="checkbox-wrapper">
+          <input type="checkbox">
+        </div>
+      </div>
+      <!-- 카드 8 -->
+      <div class="card-wrapper" data-value="8">
+        <div class="card">
+          <div class="numbers">
+            <span>8</span><span>9</span><span>10</span><span>11</span>
+            <span>12</span><span>13</span><span>14</span><span>15</span>
+            <span>24</span><span>25</span><span>26</span><span>27</span>
+            <span>28</span><span>29</span><span>30</span><span>31</span>
+          </div>
+        </div>
+        <div class="checkbox-wrapper">
+          <input type="checkbox">
+        </div>
+      </div>
+      <!-- 카드 4 -->
+      <div class="card-wrapper" data-value="4">
+        <div class="card">
+          <div class="numbers">
+            <span>4</span><span>5</span><span>6</span><span>7</span>
+            <span>12</span><span>13</span><span>14</span><span>15</span>
+            <span>20</span><span>21</span><span>22</span><span>23</span>
+            <span>28</span><span>29</span><span>30</span><span>31</span>
+          </div>
+        </div>
+        <div class="checkbox-wrapper">
+          <input type="checkbox">
+        </div>
+      </div>
+      <!-- 카드 2 -->
+      <div class="card-wrapper" data-value="2">
+        <div class="card">
+          <div class="numbers">
+            <span>2</span><span>3</span><span>6</span><span>7</span>
+            <span>10</span><span>11</span><span>14</span><span>15</span>
+            <span>18</span><span>19</span><span>22</span><span>23</span>
+            <span>26</span><span>27</span><span>30</span><span>31</span>
+          </div>
+        </div>
+        <div class="checkbox-wrapper">
+          <input type="checkbox">
+        </div>
+      </div>
+      <!-- 카드 1 -->
+      <div class="card-wrapper" data-value="1">
+        <div class="card">
+          <div class="numbers">
+            <span>1</span><span>3</span><span>5</span><span>7</span>
+            <span>9</span><span>11</span><span>13</span><span>15</span>
+            <span>17</span><span>19</span><span>21</span><span>23</span>
+            <span>25</span><span>27</span><span>29</span><span>31</span>
+          </div>
+        </div>
+        <div class="checkbox-wrapper">
+          <input type="checkbox">
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-controls">
+      <div class="instructions">선택이 모두 끝났다면 오른쪽 [확인] 버튼을 눌러주세요.</div>
+      <button id="confirm">확인</button>
+      <div class="output" id="output"> 당신이 생각한 수는 바로 >>> </div>
+    </div>
+  </div>
+
+  <script>
+    const wrappers = document.querySelectorAll('.card-wrapper');
+    const resetBtn = document.getElementById('reset');
+    const confirmBtn = document.getElementById('confirm');
+    const output = document.getElementById('output');
+    let sum = 0;
+
+    wrappers.forEach(wrapper => {
+      const card = wrapper.querySelector('.card');
+      const checkbox = wrapper.querySelector('input[type="checkbox"]');
+      const value = parseInt(wrapper.getAttribute('data-value'));
+
+      card.addEventListener('click', () => {
+        if (checkbox.checked) {
+          checkbox.checked = false;
+          wrapper.classList.remove('selected');
+          sum -= value;
+        } else {
+          checkbox.checked = true;
+          wrapper.classList.add('selected');
+          sum += value;
+        }
+      });
+
+      checkbox.addEventListener('click', e => {
+        e.stopPropagation();
+        if (checkbox.checked) {
+          wrapper.classList.add('selected');
+          sum += value;
+        } else {
+          wrapper.classList.remove('selected');
+          sum -= value;
+        }
+      });
+    });
+
+    resetBtn.addEventListener('click', () => {
+      sum = 0;
+      wrappers.forEach(w => {
+        w.classList.remove('selected');
+        w.querySelector('input[type="checkbox"]').checked = false;
+      });
+      output.textContent = '당신이 생각한 수는 바로 >>> ';
+    });
+
+    confirmBtn.addEventListener('click', () => {
+      output.textContent = '당신이 생각한 수는 바로 >>>  ' + sum;
+    });
+  </script>
+</body>
+</html>
